@@ -139,7 +139,6 @@ function App() {
 
   // Derived threat conditions
   const hasActiveDanger =
-    alerts.some((a) => (a.severity || "").toUpperCase() === "HIGH" || (a.severity || "").toUpperCase() === "DANGER") ||
     readings.some((r) => r.status === "DANGER");
 
   return (
@@ -179,10 +178,10 @@ function App() {
             />
 
             {/* 3. KPI CARDS */}
-            <KpiGrid readings={readings} alerts={alerts} />
+            <KpiGrid readings={readings}/>
 
             {/* 6. ACTIVE ALERTS */}
-            <ActiveAlerts alerts={alerts} />
+            <ActiveAlerts alerts={readings} />
 
             {/* 4 & 5. REGIONAL FLOOD MONITORING + WATER LEVEL VISUALIZATION */}
             <RegionalMonitoring readings={readings} />

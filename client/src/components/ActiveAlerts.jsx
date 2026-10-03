@@ -1,7 +1,13 @@
 import React from "react";
 
 export default function ActiveAlerts({ alerts = [] }) {
-  const hasAlerts = alerts && alerts.length > 0;
+  const activeAlerts = alerts.filter(
+    (alert) =>
+      alert.status === "DANGER" ||
+      alert.status === "WARNING"
+  );
+
+  const hasAlerts = activeAlerts.length > 0;
 
   return (
     <section id="alerts" className="panel-section alerts-container">
@@ -21,7 +27,10 @@ export default function ActiveAlerts({ alerts = [] }) {
           {hasAlerts ? (
             <>
               <span className="siren-icon">🚨</span>
-              <span>{alerts.length} ACTIVE EMERGENCY {alerts.length === 1 ? "ALERT" : "ALERTS"}</span>
+              <span>
+                {activeAlerts.length} ACTIVE EMERGENCY{" "}
+                {activeAlerts.length === 1 ? "ALERT" : "ALERTS"}
+              </span>
             </>
           ) : (
             <>
@@ -51,7 +60,7 @@ export default function ActiveAlerts({ alerts = [] }) {
         </div>
       ) : (
         <div className="active-alerts-grid">
-          {alerts.map((alert) => {
+          {activeAlerts.map((alert) => {
             const severity = (alert.severity || "HIGH").toUpperCase();
             const isCritical = severity === "HIGH" || severity === "DANGER";
             const severityClass = isCritical

@@ -24,7 +24,7 @@ async function sendSensorData() {
 
     try {
         const response = await axios.post(
-            "http://backend:5000/api/sensor-data",
+            "http://sensor-service:5001/sensor-data",
             data
         );
 

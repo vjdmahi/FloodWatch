@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function KpiGrid({ readings = [], alerts = [] }) {
+export default function KpiGrid({ readings = [] }) {
   const totalLocations = readings.length;
 
-  const dangerAlerts = alerts.filter(
-    (a) => (a.severity || "").toUpperCase() === "HIGH" || (a.severity || "").toUpperCase() === "DANGER"
-  ).length || alerts.length;
+  const dangerAlerts = readings.filter(
+    (r) => (r.status || "").toUpperCase() === "DANGER"
+  ).length;
 
   const warningCount = readings.filter((r) => (r.status || "").toUpperCase() === "WARNING").length;
   const safeCount = readings.filter((r) => (r.status || "").toUpperCase() === "SAFE").length;
