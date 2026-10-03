@@ -8,10 +8,21 @@ export default function AlertHistory({ alertHistory = [] }) {
     let list = [...alertHistory];
 
     if (statusFilter === "ACTIVE") {
-      list = list.filter((a) => a.active === true);
+      list = list.filter(
+        (a) =>
+          a.active === true ||
+          a.status === "DANGER" ||
+          a.status === "WARNING"
+      );
     } else if (statusFilter === "RESOLVED") {
-      list = list.filter((a) => a.active === false);
+      list = list.filter(
+        (a) =>
+          a.active !== true &&
+          a.status !== "DANGER" &&
+          a.status !== "WARNING"
+      );
     }
+    
 
     if (searchTerm.trim()) {
       const q = searchTerm.toLowerCase();
@@ -78,13 +89,27 @@ export default function AlertHistory({ alertHistory = [] }) {
             className={`filter-pill pill-danger ${statusFilter === "ACTIVE" ? "active" : ""}`}
             onClick={() => setStatusFilter("ACTIVE")}
           >
-            Active ({alertHistory.filter((a) => a.active).length})
+            Active ({
+              alertHistory.filter(
+                (a) =>
+                  a.active === true ||
+                  a.status === "DANGER" ||
+                  a.status === "WARNING"
+              ).length
+            })
           </button>
           <button
             className={`filter-pill pill-safe ${statusFilter === "RESOLVED" ? "active" : ""}`}
             onClick={() => setStatusFilter("RESOLVED")}
           >
-            Resolved ({alertHistory.filter((a) => !a.active).length})
+            Resolved ({
+              alertHistory.filter(
+                (a) =>
+                  a.active !== true &&
+                  a.status !== "DANGER" &&
+                  a.status !== "WARNING"
+              ).length
+            })
           </button>
         </div>
       </div>
@@ -110,7 +135,10 @@ export default function AlertHistory({ alertHistory = [] }) {
             </thead>
             <tbody>
               {filteredHistory.map((item, idx) => {
-                const isActive = item.active === true;
+                const isActive =
+                  item.active === true ||
+                  item.status === "DANGER" ||
+                  item.status === "WARNING";
                 const severity = (item.severity || "LOW").toUpperCase();
                 const isHigh = severity === "HIGH" || severity === "DANGER";
                 const isMedium = severity === "MEDIUM";

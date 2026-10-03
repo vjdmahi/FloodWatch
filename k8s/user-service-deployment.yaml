@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: floodwatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: floodwatch-user-service:latest
+          ports:
+            - containerPort: 5005
+          env:
+            - name: PORT
+              value: "5005"
+            - name: MONGO_URI
+              value: "mongodb://mongodb:27017/floodwatch"
+            - name: JWT_SECRET
+              value: "floodwatch-development-secret"
+              

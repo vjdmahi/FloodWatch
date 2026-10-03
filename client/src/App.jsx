@@ -61,7 +61,7 @@ function App() {
 
     // 1. Fetch Latest Readings (/api/latest-readings)
     try {
-      const response = await axios.get("/api/latest-readings");
+      const response = await axios.get("/api/sensor/latest-readings");
       setReadings(response.data.readings || []);
       readingsOk = true;
     } catch (err) {
@@ -75,8 +75,8 @@ function App() {
 
     // 2. Fetch Active Alerts (/api/alerts)
     try {
-      const response = await axios.get("/api/alerts");
-      setAlerts(response.data.alerts || []);
+      const response = await axios.get("/api/alert/alerts");
+      setAlerts(response.data || []);
     } catch (err) {
       console.error("Telemetry fetch error (alerts):", err);
       alertsOk = false;
@@ -89,7 +89,7 @@ function App() {
     // 3. Fetch Alert History (/api/alert/alerts)
     try {
       const response = await axios.get("/api/alert/alerts");
-      setAlertHistory(response.data.alerts || []);
+      setAlertHistory(response.data || []);
     } catch (err) {
       console.error("Telemetry fetch error (alert/alerts):", err);
       alertsOk = false;
