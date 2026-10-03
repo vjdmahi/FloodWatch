@@ -39,6 +39,7 @@ const startNotificationConsumer = async () => {
                 console.log(`🚨 Severity: ${alert.severity}`);
                 console.log(`⚠️ Message: ${alert.message}`);
                 console.log("");
+
             }
 
         });
@@ -49,6 +50,7 @@ const startNotificationConsumer = async () => {
         console.error(error.message);
 
     }
+
 };
 
 startNotificationConsumer();

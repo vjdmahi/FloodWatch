@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: sensor-service
+  namespace: floodwatch
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: sensor-service
+
+  template:
+    metadata:
+      labels:
+        app: sensor-service
+
+    spec:
+      containers:
+        - name: sensor-service
+          image: floodwatch-sensor-service:latest
+
+          ports:
+            - containerPort: 5001
+
+          env:
+            - name: PORT
+              value: "5001"
+
+            - name: MONGO_URI
+              value: "mongodb://mongodb:27017/floodwatch"

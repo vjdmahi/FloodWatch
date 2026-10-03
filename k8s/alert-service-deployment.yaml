@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: alert-service
+  namespace: floodwatch
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: alert-service
+
+  template:
+    metadata:
+      labels:
+        app: alert-service
+
+    spec:
+      containers:
+        - name: alert-service
+          image: floodwatch-alert-service:latest
+
+          ports:
+            - containerPort: 5004
+
+          env:
+            - name: PORT
+              value: "5004"
+
+            - name: MONGO_URI
+              value: "mongodb://mongodb:27017/floodwatch"
+
+            - name: KAFKA_BROKER
+              value: "kafka:9092"
